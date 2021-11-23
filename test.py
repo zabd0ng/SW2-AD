@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 
 station_info = pd.read_csv('station_id.csv', encoding='CP949')
-station = input("역 이름: ")
+station = "합정"
 no = '02호선'
 station_info = station_info[station_info['전철역명']==station]
 station_info = station_info[station_info['호선']==no]
@@ -15,12 +15,12 @@ response = requests.get(url)
 
 html = response.text
 soup = BeautifulSoup(html, 'html.parser')
-opportunity = soup.select_one('tr:nth-of-type(2) > td').get('rowspan')
-print(opportunity)
-uptrain = []
-downtrain = []
-arrivestationlist = soup.select('tr')[1:int(opportunity)+2]
-timelist = soup.select('tr')[3:int(opportunity)+2]
+# opportunity = soup.select_one('tr > td').get('rowspan') #:nth-of-type(2)
+# print(opportunity)
+# uptrain = []
+# downtrain = []
+# arrivestationlist = soup.select('tr')[1:]   #int(opportunity)+2
+timelist = soup.select('tr')[3:]            #int(opportunity)+2
 for time in timelist:
     t = time.get_text().replace('\n', '')
     print(t)
